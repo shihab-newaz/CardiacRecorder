@@ -13,5 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-/drawable-v24
-/drawable
+/app/src/main/res/drawable-v24
+/app/src/main/res//drawable
