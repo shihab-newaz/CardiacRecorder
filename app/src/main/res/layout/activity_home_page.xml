@@ -10,6 +10,7 @@
     tools:context=".HomePageActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/firstCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -59,6 +60,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/secondCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
