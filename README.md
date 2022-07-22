@@ -4,7 +4,8 @@ Cardiac Recorder is a simple, attractive, intuitive Blood Pressure and Heart rat
 The app includes the following features:
 <br>
 <ul>
-<li>User can add new record.<li>
+<li>User can add new record.</li>
+
 <li>User can see his/her list of entered record.</li>
 <li>User can edit his/her existing record if wrong measurement is entered.</li>
 <li>User can delete any of his/her record.
