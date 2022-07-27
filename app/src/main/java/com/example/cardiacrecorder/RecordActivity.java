@@ -3,6 +3,9 @@ package com.example.cardiacrecorder;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+
+import android.content.Intent;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -64,56 +67,66 @@ public class RecordActivity extends AppCompatActivity {
 //        String hr = heartRate.getText().toString();
 
         String check = getIntent().getStringExtra("check");
-//        if (check.equals("1")) {
 
-        save.setOnClickListener(v -> {
-            String bp_status = "N/A";
-            String heart_rate_status = "N/A";
-            String sys = systolic.getText().toString();
-            String dias = diastolic.getText().toString();
-            String hr = heartRate.getText().toString();
-            if (!TextUtils.isEmpty(sys) && !TextUtils.isEmpty(dias) && !TextUtils.isEmpty(hr)) {
-                int systolic1 = Integer.parseInt(sys);
-                int diastolic1 = Integer.parseInt(dias);
-                int heart_rate = Integer.parseInt(hr);
-                if (systolic1 >= 180 || diastolic1 >= 120) {
-                    bp_status = "Hypertensive Crisis(Seek Emergency Care)";
-                } else if (systolic1 >= 140 || diastolic1 >= 90) {
-                    bp_status = "Hypertension Stage 2";
-                } else if (systolic1 >= 130 || diastolic1 >= 80) {
-                    bp_status = "Hypertension Stage 1";
-                } else if (systolic1 < 90 && diastolic1 < 60) {
-                    bp_status = "Hypotension";
-                } else if (systolic1 >= 120) {
-                    bp_status = "Elevated";
-                } else {
-                    bp_status = "Normal";
+        if (check.equals("1")) {
+
+            save.setOnClickListener(v -> {
+                String bp_status = "N/A";
+                String heart_rate_status = "N/A";
+                String sys = systolic.getText().toString();
+                String dias = diastolic.getText().toString();
+                String hr = heartRate.getText().toString();
+                if (!TextUtils.isEmpty(sys) && !TextUtils.isEmpty(dias) && !TextUtils.isEmpty(hr)) {
+                    int systolic1 = Integer.parseInt(sys);
+                    int diastolic1 = Integer.parseInt(dias);
+                    int heart_rate = Integer.parseInt(hr);
+                    if (systolic1 >= 180 || diastolic1 >= 120) {
+                        bp_status = "Hypertensive Crisis(Seek Emergency Care)";
+                    } else if (systolic1 >= 140 || diastolic1 >= 90) {
+                        bp_status = "Hypertension Stage 2";
+                    } else if (systolic1 >= 130 || diastolic1 >= 80) {
+                        bp_status = "Hypertension Stage 1";
+                    } else if (systolic1 < 90 && diastolic1 < 60) {
+                        bp_status = "Hypotension";
+
+                    } else if (systolic1 > 120 && systolic1 <= 129 && diastolic1 < 80) {
+                        bp_status = "Elevated";
+                    } else if (systolic1 < 120 && diastolic1 < 80) {
+                        bp_status = "Normal";
+                    }
+
+                    if (heart_rate >= 60 && heart_rate <= 80) {
+                        heart_rate_status = "normal";
+                    } else {
+                        heart_rate_status = "exceptional";
+                    }
+                    SQliteDBmanager sqliteDBmanager = new SQliteDBmanager(RecordActivity.this);
+                     sqliteDBmanager.addRecord(date.getText().toString(),
+                            time.getText().toString(), systolic.getText().toString(),
+                            diastolic.getText().toString(), heartRate.getText().toString(),
+                            bp_status, heart_rate_status, comment.getText().toString());
+                    time.setText("");
+                    systolic.setText("");
+                    diastolic.setText("");
+                    heartRate.setText("");
+                    date.setText("");
+                    comment.setText("");
+//            if (res == -1) {
+//                Toast.makeText(RecordActivity.this, "Not successful", Toast.LENGTH_LONG).show();
+//            } else {
+//                Toast.makeText(RecordActivity.this, " successful "+bp_status+" "+heart_rate_status, Toast.LENGTH_LONG).show();
+//            }
+                    Intent intent = new Intent(RecordActivity.this, listofRecord.class);
+                    startActivity(intent);
+                    finish();
                 }
-                if (heart_rate >= 60 && heart_rate <= 80) {
-                    heart_rate_status = "normal";
-                } else {
-                    heart_rate_status = "exceptional";
+                else{
+                    Toast.makeText(RecordActivity.this, " Enter data ", Toast.LENGTH_LONG).show();
                 }
-            }
-            SQliteDBmanager sqliteDBmanager = new SQliteDBmanager(RecordActivity.this);
-            long res = sqliteDBmanager.addRecord(date.getText().toString(),
-                    time.getText().toString(), systolic.getText().toString(),
-                    diastolic.getText().toString(), heartRate.getText().toString(),
-                    bp_status, heart_rate_status, comment.getText().toString());
-            time.setText("");
-            systolic.setText("");
-            diastolic.setText("");
-            heartRate.setText("");
-            date.setText("");
-            comment.setText("");
-            if (res == -1) {
-                Toast.makeText(RecordActivity.this, "Not successful", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(RecordActivity.this, " successful " + bp_status + " " + heart_rate_status, Toast.LENGTH_LONG).show();
-            }
-        });
+            });
+        }
+
+
     }
 }
-
-
 
