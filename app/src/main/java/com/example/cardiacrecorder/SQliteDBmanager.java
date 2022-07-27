@@ -6,18 +6,20 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.SimpleCursorAdapter;
+
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
 /**
  * this is a manager class which extends SQLiteOpenHelper class
  * this manager class has some methods to do some operation with sqlite database
  */
 public class SQliteDBmanager extends SQLiteOpenHelper {
-    private static final String dbname = "measurements.db";
-//    private Context context;
+    private static final String dbname = "measurements";
+    private Context context;
+
     private static final String table_name = "records";
 
     /**
@@ -27,8 +29,12 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
      */
     public SQliteDBmanager(@Nullable Context context) {
         super(context, dbname, null, 1);
-        
+
+        this.context = context;
     }
+
+
+
 
     /**
      * onCreate method of SQliteDBmanager class
@@ -42,7 +48,9 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
 
         try {
             String query = "CREATE TABLE " + table_name +
-                    "(id integer primary key autoincrement,creation_date text,creation_date text," +
+
+                    "(id integer primary key autoincrement,creation_date text,creation_time text," +
+
                     "systolic text,diastolic text,heart_rate text," +
                     "bp_status text,heart_rate_status text,comment text)";
             sqLiteDatabase.execSQL(query);
@@ -84,10 +92,56 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
      * in database
      */
 
-    void addRecord(String date, String time, String systolic, String diastolic, String heartrate,
-                      String bpstatus, String heartratestatus, String comment) {
+
+    public long addRecord(String date, String time, String systolic, String diastolic, String heartrate,
+                          String bpstatus, String heartratestatus, String comment) {
+        long result=0;
+
         try {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("creation_date", date);
+
+            contentValues.put("creation_time", time);
+
+            contentValues.put("systolic", systolic);
+            contentValues.put("diastolic", diastolic);
+            contentValues.put("heart_rate", heartrate);
+            contentValues.put("bp_status", bpstatus);
+            contentValues.put("heart_rate_status", heartratestatus);
+            contentValues.put("comment", comment);
+
+            result = sqLiteDatabase.insert(table_name, null, contentValues);
+
+
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Could not add to database", Toast.LENGTH_LONG).show();
+        }
+        return result;
+    }
+
+        /**
+         * used to update data on database
+         *
+         * @param id              id for each record
+         * @param date            date
+         * @param time            time
+         * @param systolic        systolic data
+         * @param diastolic       disatolic data
+         * @param heartrate       heartRate
+         * @param bpstatus        bpstatus
+         * @param heartratestatus bpstatus
+         * @param comment         comment on each record
+         * @return true if data is updated on that particular id or
+         * false if updateData is unsuccessful
+         */
+        public Boolean updateData (String id, String date, String time, String systolic, String
+        diastolic, String heartrate, String comment, String bpstatus, String heartratestatus){
+
+            // Toast.makeText(context,"id: "+id,Toast.LENGTH_SHORT).show();
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
             ContentValues contentValues = new ContentValues();
             contentValues.put("creation_date", date);
             contentValues.put("creation_date", time);
@@ -97,72 +151,33 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
             contentValues.put("bp_status", bpstatus);
             contentValues.put("heart_rate_status", heartratestatus);
             contentValues.put("comment", comment);
-//        long pk_id = sqLiteDatabase.insert(table_name, null, contentValues);
-            sqLiteDatabase.insert(table_name, null, contentValues);
-//        return pk_id;
-//            return true;
-        } catch (SQLiteException e) {
-            e.printStackTrace();
-            Toast.makeText(context,"Could not add to database",Toast.LENGTH_LONG).show();
-//            return false;
+
+            long res = sqLiteDatabase.update("records", contentValues, "_id = ?", new String[]{id});
+
+            if (res > 0) return true;
+
+            return false;
         }
-    }
 
-    /**
-     * used to update data on database
-     *
-     * @param id              id for each record
-     * @param date            date
-     * @param time            time
-     * @param systolic        systolic data
-     * @param diastolic       disatolic data
-     * @param heartrate       heartRate
-     * @param bpstatus        bpstatus
-     * @param heartratestatus bpstatus
-     * @param comment         comment on each record
-     * @return true if data is updated on that particular id or
-     * false if updateData is unsuccessful
-     */
-    public Boolean updateData(String id, String date, String time, String systolic, String diastolic, String heartrate, String comment, String bpstatus, String heartratestatus) {
+        /**
+         * delete a particular data from database table
+         * where row id is equal to parameterized id
+         *
+         * @param id id of that record which you want to delete
+         * @return
+         */
+        public long deleteList (String id){
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+            return sqLiteDatabase.delete("records", id + " = ?", new String[]{id});
+        }
 
-        // Toast.makeText(context,"id: "+id,Toast.LENGTH_SHORT).show();
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        /**
+         * create a ListArray from fetching database all values
+         * using cursor
+         *
+         * @return a simpleCursorAdapter to return all values at once
+         */
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("creation_date", date);
-        contentValues.put("creation_date", time);
-        contentValues.put("systolic", systolic);
-        contentValues.put("diastolic", diastolic);
-        contentValues.put("heart_rate", heartrate);
-        contentValues.put("bp_status", bpstatus);
-        contentValues.put("heart_rate_status", heartratestatus);
-        contentValues.put("comment", comment);
-
-        long res = sqLiteDatabase.update("records", contentValues, "_id = ?", new String[]{id});
-
-        if (res > 0) return true;
-
-        return false;
-    }
-
-    /**
-     * delete a particular data from database table
-     * where row id is equal to parameterized id
-     *
-     * @param id id of that record which you want to delete
-     * @return
-     */
-    public long deleteList(String id) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        return sqLiteDatabase.delete("records", id + " = ?", new String[]{id});
-    }
-
-    /**
-     * create a ListArray from fetching database all values
-     * using cursor
-     *
-     * @return a simpleCursorAdapter to return all values at once
-     */
     public SimpleCursorAdapter loadListViewFromDB() {
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -181,5 +196,12 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
 
     }
 
-}
+    public Cursor getListContents(){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor data=sqLiteDatabase.rawQuery("SELECT * FROM "+table_name,null);
+        return data;
+
+    }
+
+    }
 
