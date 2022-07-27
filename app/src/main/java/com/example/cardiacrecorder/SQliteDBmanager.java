@@ -6,11 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
 /**
  * this is a manager class which extends SQLiteOpenHelper class
@@ -178,26 +176,33 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
          * @return a simpleCursorAdapter to return all values at once
          */
 
-    public SimpleCursorAdapter loadListViewFromDB() {
-
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        String columns[] = {"id", "date", "time", "systolic", "diastolic", "heartrate", "bpstatus", "heartratestatus"};
-        Cursor cursor = sqLiteDatabase.query(SQliteDBmanager.table_name, columns, null, null, null, null, null);
-
-        String[] fromFieldNames = new String[]{
-                "id", "date", "time", "systolic", "diastolic", "heartrate", "bpstatus", "heartratestatus"
-        };
-
-        int[] toViewId = new int[]{
-                R.id.listid, R.id.date_id_single_data_item, R.id.time_id_single_data_item, R.id.Systolic_id_single_data_item, R.id.dystolic_id_single_data_item, R.id.heartRate_id_single_data_item, R.id.comment_id_single_data_item, R.id.bpstatus_id_single_data_item, R.id.heartratestatus_id_single_data_item
-        };
-        SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(context, R.layout.singlerecord, cursor, fromFieldNames, toViewId);
-        return listAdapter;
-
-    }
+//    public SimpleCursorAdapter loadListViewFromDB() {
+//
+//        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+//        String columns[] = {"id", "date", "time", "systolic", "diastolic", "heartrate", "bpstatus", "heartratestatus"};
+//        Cursor cursor = sqLiteDatabase.query(SQliteDBmanager.table_name, columns, null, null, null, null, null);
+//
+//        String[] fromFieldNames = new String[]{
+//                "id", "date", "time", "systolic", "diastolic", "heartrate", "bpstatus", "heartratestatus"
+//        };
+//
+//        int[] toViewId = new int[]{
+//                R.id.listid, R.id.date_id_single_data_item, R.id.time_id_single_data_item, R.id.Systolic_id_single_data_item, R.id.dystolic_id_single_data_item, R.id.heartRate_id_single_data_item, R.id.comment_id_single_data_item, R.id.bpstatus_id_single_data_item, R.id.heartratestatus_id_single_data_item
+//        };
+//        SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(context, R.layout.singlerecord, cursor, fromFieldNames, toViewId);
+//        return listAdapter;
+//
+//    }
 
     public Cursor getListContents(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor data=sqLiteDatabase.rawQuery("SELECT * FROM "+table_name,null);
+        return data;
+
+    }
+
+    public Cursor showRecords(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor data=sqLiteDatabase.rawQuery("SELECT * FROM "+table_name,null);
         return data;
 
