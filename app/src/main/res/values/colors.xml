@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="purple_200">#FFBB86FC</color>
@@ -15,4 +16,5 @@
     <color name="deepGreen">#00C072</color>
     <color name="notBlack">#141E27</color>
     <color name="cyan">	#6a5acd</color>
+
 </resources>

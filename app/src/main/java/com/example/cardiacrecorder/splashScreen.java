@@ -1,10 +1,12 @@
 package com.example.cardiacrecorder;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 
 public class splashScreen extends AppCompatActivity {
 
@@ -25,5 +27,6 @@ public class splashScreen extends AppCompatActivity {
         };
 
         new Handler().postDelayed(runnable, 1500);
+
     }
 }

@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".listofRecord">
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -61,8 +63,10 @@
     </androidx.appcompat.widget.Toolbar>
 
 
+
     <ListView
         android:id="@+id/user_data_list_view"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
@@ -79,10 +83,12 @@
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintHorizontal_bias="0.0"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:ignore="ScrollViewCount"
         tools:listitem="@layout/singlerecord" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_id"
@@ -100,6 +106,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
 
+
 </RelativeLayout>
 
 <!--<?xml version="1.0" encoding="utf-8"?>-->
@@ -113,3 +120,4 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content" />-->
 <!--</LinearLayout>-->
+

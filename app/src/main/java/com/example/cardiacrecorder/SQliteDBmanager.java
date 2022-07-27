@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.cursoradapter.widget.SimpleCursorAdapter;
 public class SQliteDBmanager extends SQLiteOpenHelper {
     private static final String dbname = "measurements";
     private Context context;
+
     private static final String table_name = "records";
 
     /**
@@ -27,8 +29,10 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
      */
     public SQliteDBmanager(@Nullable Context context) {
         super(context, dbname, null, 1);
+
         this.context = context;
     }
+
 
 
 
@@ -44,7 +48,9 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
 
         try {
             String query = "CREATE TABLE " + table_name +
+
                     "(id integer primary key autoincrement,creation_date text,creation_time text," +
+
                     "systolic text,diastolic text,heart_rate text," +
                     "bp_status text,heart_rate_status text,comment text)";
             sqLiteDatabase.execSQL(query);
@@ -86,14 +92,18 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
      * in database
      */
 
+
     public long addRecord(String date, String time, String systolic, String diastolic, String heartrate,
                           String bpstatus, String heartratestatus, String comment) {
         long result=0;
+
         try {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("creation_date", date);
+
             contentValues.put("creation_time", time);
+
             contentValues.put("systolic", systolic);
             contentValues.put("diastolic", diastolic);
             contentValues.put("heart_rate", heartrate);
@@ -167,6 +177,7 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
          *
          * @return a simpleCursorAdapter to return all values at once
          */
+
     public SimpleCursorAdapter loadListViewFromDB() {
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -184,6 +195,7 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
         return listAdapter;
 
     }
+
     public Cursor getListContents(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor data=sqLiteDatabase.rawQuery("SELECT * FROM "+table_name,null);
