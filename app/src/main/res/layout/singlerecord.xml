@@ -86,20 +86,6 @@
                     android:text="10:20"
                     android:textAppearance="@style/date_14_05_"
                     android:textStyle="bold" />
-                <ImageView
-                    android:id="@+id/deleteButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_delete_24"
-                    android:layout_marginLeft="550px"
-                    />
-                <ImageView
-                    android:id="@+id/editButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_edit_24"
-                    android:layout_marginLeft="20px"
-                    />
 
             </LinearLayout>
 

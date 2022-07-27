@@ -1,9 +1,10 @@
 package com.example.cardiacrecorder;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,34 +17,55 @@ import java.util.List;
 
 public class listofRecord extends AppCompatActivity {
     private ListView showdatalistView;
-    ArrayAdapter<String> recordAdapter;
-    ArrayList<String> dataList;
+
     SQliteDBmanager database;
     private List<Record> recordList;
     private adapter showAdapter;
-    ImageView edit, delete;
-    public Cursor records;
+
+    public Cursor records,show;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_list);
-        ListView listView = findViewById(R.id.user_data_list_view);
         recordList = new ArrayList<>();
         showAdapter = new adapter(listofRecord.this, recordList);
         showdatalistView = (ListView) findViewById(R.id.user_data_list_view);
         database = new SQliteDBmanager(listofRecord.this);
         records = database.getListContents();
+        show=database.showRecords();
         if (records.getCount() == 0) {
             Toast.makeText(listofRecord.this, "History is empty", Toast.LENGTH_LONG).show();
         } else {
             while (records.moveToNext()) {
-                recordList.add(new Record(records.getString(1), records.getString(2).toString(), records.getString(4), records.getString(3), records.getString(5), records.getString(8),
+                recordList.add(new Record(records.getString(1), records.getString(2), records.getString(4), records.getString(3), records.getString(5), records.getString(8),
                         records.getString(6), records.getString(7)));
             }
 
             showdatalistView.setAdapter(showAdapter);
         }
+
+        showdatalistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(listofRecord.this, ShowMeasurement.class);
+                while (show.moveToNext()) {
+
+                  intent.putExtra("creation_date", show.getString(2));
+                    intent.putExtra("creation_time", show.getString(1));
+                    intent.putExtra("systolic", show.getString(3));
+                    intent.putExtra("diastolic", show.getString(4));
+                    intent.putExtra("heart_rate", show.getString(5));
+//                    intent.putExtra("comments", show.getString(8));
+
+                }
+
+
+
+                startActivity(intent);
+            }
+        });
+
 
     }
 

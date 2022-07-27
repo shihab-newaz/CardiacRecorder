@@ -48,11 +48,6 @@ public class adapter  extends ArrayAdapter <Record> {
         textView6.setText(record.getComment());
         textView7.setText(record.getBpStatus());
         textView8.setText(record.getHeartRateStatus());
-//        ImageView delete = view.findViewById(R.id.deleteButton);
-//        delete.setOnClickListener(v-> {
-//
-//            sQliteDBmanager.deleteList(records.getString(0));
-//        });
         return view;
 
     }
