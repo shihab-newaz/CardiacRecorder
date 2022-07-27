@@ -3,7 +3,9 @@ package com.example.cardiacrecorder;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+
 import android.content.Intent;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -65,6 +67,7 @@ public class RecordActivity extends AppCompatActivity {
 //        String hr = heartRate.getText().toString();
 
         String check = getIntent().getStringExtra("check");
+
         if (check.equals("1")) {
 
             save.setOnClickListener(v -> {
@@ -123,7 +126,7 @@ public class RecordActivity extends AppCompatActivity {
             });
         }
 
+
     }
 }
-
 
