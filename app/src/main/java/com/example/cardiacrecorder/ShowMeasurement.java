@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +18,26 @@ public class ShowMeasurement extends AppCompatActivity {
         setContentView(R.layout.activity_show_measurement);
         Bundle extras = getIntent().getExtras();
         if (extras== null) {
-
+            TextView showdate = findViewById(R.id.showDate);
+            showdate.setText("12/12/12");
+            TextView showtime = findViewById(R.id.showTime);
+            showtime.setText("10:00 A.M.");
+            TextView showSystolic = findViewById(R.id.showSystolic);
+            showSystolic.setText("120");
+            TextView showDiastolic = findViewById(R.id.showDiastolic);
+            showDiastolic.setText("80");
+            TextView showBPM = findViewById(R.id.showBPM);
+            showBPM.setText("60");
+            TextView showComment = findViewById(R.id.showComment);
+            showComment.setText("resting");
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent2 = new Intent(ShowMeasurement.this, listofRecord.class);
+                    startActivity(intent2);
+                    finish();
+                }
+            });
         }
         else {
             Intent intent = getIntent();
@@ -71,8 +91,8 @@ public class ShowMeasurement extends AppCompatActivity {
             delete.setOnClickListener(view ->
             {
                 SQliteDBmanager sqliteDBmanager = new SQliteDBmanager(ShowMeasurement.this);
-            /*sqliteDBmanager.deleteList(id);
-            Toast.makeText(ShowMeasurement.this, "Deleted successfully ", Toast.LENGTH_LONG).show();*/
+            sqliteDBmanager.deleteList(id);
+            Toast.makeText(ShowMeasurement.this, "Deleted successfully ", Toast.LENGTH_LONG).show();
                 Intent intent2 = new Intent(ShowMeasurement.this, listofRecord.class);
                 startActivity(intent2);
                 finish();

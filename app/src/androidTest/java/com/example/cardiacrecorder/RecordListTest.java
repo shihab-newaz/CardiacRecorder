@@ -34,7 +34,7 @@ public class RecordListTest {
         onView(withId(R.id.heartRate)).perform(ViewActions.typeText("60"));
         onView(withId(R.id.comment)).perform(ViewActions.typeText("resting"));
         onView(withId(R.id.saveButton)).perform(click());
-        onData(anything()).inAdapterView(withId(R.id.user_data_list_view)).atPosition(1).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.user_data_list_view)).atPosition(0).perform(click());
         onView(withId(R.id.buttonDelete)).perform(click());
     }
 }
