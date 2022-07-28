@@ -89,16 +89,16 @@ public class RecordActivity extends AppCompatActivity {
                     } else if (systolic1 < 90 && diastolic1 < 60) {
                         bp_status = "Hypotension";
 
-                    } else if (systolic1 > 120 && systolic1 <= 129 && diastolic1 < 80) {
+                    } else if (systolic1 > 120) {
                         bp_status = "Elevated";
-                    } else if (systolic1 < 120 && diastolic1 < 80) {
+                    } else if (systolic1 < 120) {
                         bp_status = "Normal";
                     }
 
                     if (heart_rate >= 60 && heart_rate <= 80) {
-                        heart_rate_status = "normal";
+                        heart_rate_status = "Normal";
                     } else {
-                        heart_rate_status = "exceptional";
+                        heart_rate_status = "Exceptional";
                     }
                     SQliteDBmanager sqliteDBmanager = new SQliteDBmanager(RecordActivity.this);
                      sqliteDBmanager.addRecord(date.getText().toString(),

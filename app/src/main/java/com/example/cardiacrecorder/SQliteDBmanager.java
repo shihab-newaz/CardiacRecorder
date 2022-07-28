@@ -119,42 +119,46 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
         return result;
     }
 
-        /**
-         * used to update data on database
-         *
-         * @param id              id for each record
-         * @param date            date
-         * @param time            time
-         * @param systolic        systolic data
-         * @param diastolic       disatolic data
-         * @param heartrate       heartRate
-         * @param bpstatus        bpstatus
-         * @param heartratestatus bpstatus
-         * @param comment         comment on each record
-         * @return true if data is updated on that particular id or
-         * false if updateData is unsuccessful
-         */
-        public Boolean updateData (String id, String date, String time, String systolic, String
-        diastolic, String heartrate, String comment, String bpstatus, String heartratestatus){
 
-            // Toast.makeText(context,"id: "+id,Toast.LENGTH_SHORT).show();
+        public Boolean checkData (String id){
+
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+            String Query = "Select * from " + table_name + " where " + id + " = " + id;
+            Cursor cursor = sqLiteDatabase.rawQuery(Query, null);
+            if(cursor.getCount() <= 0){
+                cursor.close();
+                return false;
+            }
+            cursor.close();
+            return true;
+        }
 
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("creation_date", date);
-            contentValues.put("creation_date", time);
-            contentValues.put("systolic", systolic);
-            contentValues.put("diastolic", diastolic);
-            contentValues.put("heart_rate", heartrate);
-            contentValues.put("bp_status", bpstatus);
-            contentValues.put("heart_rate_status", heartratestatus);
-            contentValues.put("comment", comment);
+        public long updateData (String id, String date, String time, String systolic, String
+        diastolic, String heartrate, String comment, String bpstatus, String heartratestatus){
+            long result=0;
 
-            long res = sqLiteDatabase.update("records", contentValues, "_id = ?", new String[]{id});
+            try {
+                SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("creation_date", date);
 
-            if (res > 0) return true;
+                contentValues.put("creation_time", time);
 
-            return false;
+                contentValues.put("systolic", systolic);
+                contentValues.put("diastolic", diastolic);
+                contentValues.put("heart_rate", heartrate);
+                contentValues.put("bp_status", bpstatus);
+                contentValues.put("heart_rate_status", heartratestatus);
+                contentValues.put("comment", comment);
+
+                result = sqLiteDatabase.update(table_name,contentValues, "id = ?", new String[]{id});
+
+
+            } catch (SQLiteException e) {
+                e.printStackTrace();
+                Toast.makeText(context, "Could not add to database", Toast.LENGTH_LONG).show();
+            }
+            return result;
         }
 
         /**
@@ -166,7 +170,7 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
          */
         public long deleteList (String id){
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-            return sqLiteDatabase.delete("records", id + " = ?", new String[]{id});
+            return sqLiteDatabase.delete(table_name,  "id=?", new String[]{id});
         }
 
         /**
@@ -176,32 +180,14 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
          * @return a simpleCursorAdapter to return all values at once
          */
 
-//    public SimpleCursorAdapter loadListViewFromDB() {
-//
-//        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-//        String columns[] = {"id", "date", "time", "systolic", "diastolic", "heartrate", "bpstatus", "heartratestatus"};
-//        Cursor cursor = sqLiteDatabase.query(SQliteDBmanager.table_name, columns, null, null, null, null, null);
-//
-//        String[] fromFieldNames = new String[]{
-//                "id", "date", "time", "systolic", "diastolic", "heartrate", "bpstatus", "heartratestatus"
-//        };
-//
-//        int[] toViewId = new int[]{
-//                R.id.listid, R.id.date_id_single_data_item, R.id.time_id_single_data_item, R.id.Systolic_id_single_data_item, R.id.dystolic_id_single_data_item, R.id.heartRate_id_single_data_item, R.id.comment_id_single_data_item, R.id.bpstatus_id_single_data_item, R.id.heartratestatus_id_single_data_item
-//        };
-//        SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(context, R.layout.singlerecord, cursor, fromFieldNames, toViewId);
-//        return listAdapter;
-//
-//    }
-
     public Cursor getListContents(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        Cursor data=sqLiteDatabase.rawQuery("SELECT * FROM "+table_name,null);
+        Cursor data=sqLiteDatabase.rawQuery("SELECT * FROM "+table_name, null);
         return data;
 
     }
 
-    public Cursor showRecords(){
+    public Cursor showRecords( ){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor data=sqLiteDatabase.rawQuery("SELECT * FROM "+table_name,null);
         return data;
