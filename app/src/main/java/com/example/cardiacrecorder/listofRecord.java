@@ -67,6 +67,7 @@ public class listofRecord extends AppCompatActivity {
             Intent intent = new Intent(listofRecord.this, ShowMeasurement.class);
             {
                 while (show.moveToNext()) {
+                    intent.putExtra("id", show.getString(0));
                     intent.putExtra("creation_time", show.getString(1));
                     intent.putExtra("creation_date", show.getString(2));
                     intent.putExtra("systolic", show.getString(3));
