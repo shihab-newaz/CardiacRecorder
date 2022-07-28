@@ -8,14 +8,14 @@ import java.util.ArrayList;
  * operation on RecordList
  */
 
-public class List {
-    private static java.util.List<Record> records = new ArrayList<>();
+public class RecordList {
+    public java.util.List<Record> records = new ArrayList<>();
 
     /**
      * add a record to list
      * @param record datatype is Record type
      */
-    public void add(Record record) {
+    public void addRecord(Record record) {
         if (records.contains(record)) {
             throw new IllegalArgumentException();
         }
