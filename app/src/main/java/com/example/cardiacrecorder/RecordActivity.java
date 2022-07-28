@@ -1,11 +1,8 @@
 package com.example.cardiacrecorder;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -28,7 +25,6 @@ public class RecordActivity extends AppCompatActivity {
     EditText comment;
     Button save;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +121,10 @@ public class RecordActivity extends AppCompatActivity {
                 }
             });
         }
+else{
 
+
+        }
 
     }
 }

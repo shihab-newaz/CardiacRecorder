@@ -190,6 +190,7 @@ public class SQliteDBmanager extends SQLiteOpenHelper {
     public Cursor showRecords( ){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor data=sqLiteDatabase.rawQuery("SELECT * FROM "+table_name,null);
+        data.moveToFirst();
         return data;
 
     }

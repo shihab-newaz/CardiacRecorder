@@ -2,18 +2,18 @@ package com.example.cardiacrecorder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 public class HomePageActivity extends AppCompatActivity {
-CardView add,history;
+    ImageView add,history;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        add= findViewById(R.id.firstCard);
-        history= findViewById(R.id.secondCard);
+        add= findViewById(R.id.image_add);
+        history= findViewById(R.id.image_history);
         add.setOnClickListener(v -> {
 
             Intent intent = new Intent(HomePageActivity.this, RecordActivity.class);

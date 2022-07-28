@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -21,8 +22,9 @@ public class listofRecord extends AppCompatActivity {
     SQliteDBmanager database;
     private List<Record> recordList;
     private adapter showAdapter;
-    private FloatingActionButton edit;
-    public Cursor records, show;
+    public FloatingActionButton add;
+    public Cursor records,show;
+    SimpleCursorAdapter simpleCursorAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,13 +38,21 @@ public class listofRecord extends AppCompatActivity {
         database = new SQliteDBmanager(listofRecord.this);
 
         records = database.getListContents();
-        show = database.showRecords();
+
+        add = findViewById(R.id.floating_add_btn);
+        add.setOnClickListener(view ->
+        {
+            Intent intent2 = new Intent(listofRecord.this, RecordActivity.class);
+            intent2.putExtra("check", "1");
+            startActivity(intent2);
+        });
 
         if (records.getCount() == 0) {
             Toast.makeText(listofRecord.this, "History is empty", Toast.LENGTH_LONG).show();
         } else {
             while (records.moveToNext()) {
-                recordList.add(new Record(records.getString(1), records.getString(2), records.getString(4), records.getString(3),
+                recordList.add(new Record(records.getString(1), records.getString(2),
+                        records.getString(4), records.getString(3),
                         records.getString(5), records.getString(8),
                         records.getString(6), records.getString(7)));
             }
@@ -50,30 +60,29 @@ public class listofRecord extends AppCompatActivity {
             showdatalistView.setAdapter(showAdapter);
         }
 
-//        String[] time = new String[show.getCount()];
-//        String[] date = new String[show.getCount()];
+        show = database.showRecords();
+
+
         showdatalistView.setOnItemClickListener((adapterView, view, i, l) -> {
             Intent intent = new Intent(listofRecord.this, ShowMeasurement.class);
-             {
-
-                intent.putExtra("creation_time", show.getString(1));
-                intent.putExtra("creation_date", show.getString(2));
-                intent.putExtra("systolic", show.getString(3));
-                intent.putExtra("diastolic", show.getString(4));
-                intent.putExtra("heart_rate", show.getString(5));
-                intent.putExtra("comments", show.getString(8));
+            {
+                while (show.moveToNext()) {
+                    intent.putExtra("creation_time", show.getString(1));
+                    intent.putExtra("creation_date", show.getString(2));
+                    intent.putExtra("systolic", show.getString(3));
+                    intent.putExtra("diastolic", show.getString(4));
+                    intent.putExtra("heart_rate", show.getString(5));
+                    intent.putExtra("comments", show.getString(8));
+                }
+                startActivity(intent);
             }
-            startActivity(intent);
         });
 
-        edit = findViewById(R.id.floating_add_btn);
 
-        edit.setOnClickListener(view ->
-        {
-            Intent intent = new Intent(listofRecord.this, RecordActivity.class);
-            startActivity(intent);
-        });
     }
 
 
 }
+
+
+
