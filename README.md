@@ -24,3 +24,6 @@ User will fill the following six field to save a record:
 </ul>
 
 <a href="https://github.com/shihab-newaz/CardiacRecorder/wiki/workDistribution">Work Distribution</a>
+<a href="https://github.com/shihab-newaz/CardiacRecorder/wiki/mockup">Mock Up</a>
+<a href="https://github.com/shihab-newaz/CardiacRecorder/wiki/uml">UML Class diagram</a>
+<a href="https://github.com/shihab-newaz/CardiacRecorder/wiki/storyboard">Storyboard Sequence</a>
