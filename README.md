@@ -22,3 +22,5 @@ User will fill the following six field to save a record:
 <li>Heart Rate in beats per minute(bpm).</li>
 <li>Comment(optional).</li>
 </ul>
+
+<a href="https://github.com/shihab-newaz/CardiacRecorder/wiki/workDistribution">Work Distribution</a>
