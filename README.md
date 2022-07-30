@@ -31,3 +31,4 @@ User will fill the following six field to save a record:
 <h3>App demonstration video links</h3>
 <a href="https://youtu.be/0_sEVoDqZmY">App demonstration</a><br>
 <a href="https://youtu.be/ZiqQb2AHx74">Unit Test</a><br>
+<a href="https://youtu.be/mTIUB1_Qi8w">UI Test</a><br>
