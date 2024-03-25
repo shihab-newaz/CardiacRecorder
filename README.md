@@ -1,5 +1,5 @@
 # CardiacRecorder
-Cardiac Recorder is a simple, attractive, intuitive Blood Pressure and Heart rate recorder app. This app keeps the records of the blood pressure(mmHg) and heart rate(bpm) measurements of a user.It alerts the user if his/her health condition is not good enough based on the data entered. It also helps the user to avoid entering meaningless data. 
+Cardiac Recorder is a simple, attractive, intuitive Blood Pressure and Heart rate recorder android app. This app keeps the records of the blood pressure(mmHg) and heart rate(bpm) measurements of a user.It alerts the user if his/her health condition is not good enough based on the data entered. It also helps the user to avoid entering meaningless data. 
 <br><br>
 The app includes the following features:
 <br>
